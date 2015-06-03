@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Ex04.Menus.Interfaces
+namespace Ex04.Menus.Delegates
 {
     public class MainMenu
     {
@@ -25,7 +25,7 @@ namespace Ex04.Menus.Interfaces
             while (showMenu)
             {
                 StringBuilder menuToDisplay = buildMenuToDisplay(i_MenuItem);
-                
+
                 System.Console.Clear();
                 System.Console.WriteLine(menuToDisplay);
                 userSelection = getValidSelectionFromUser(i_MenuItem);
@@ -51,16 +51,7 @@ namespace Ex04.Menus.Interfaces
             }
             else
             {
-                IMenuButton selectedItemAsButton = selectedMenuItem as IMenuButton;
-                if (selectedItemAsButton != null)
-                {
-                    selectedItemAsButton.ClickButton();
-                }
-                else
-                {
-                    System.Console.WriteLine();
-                    System.Console.WriteLine("Error: The option selected cannot perform an action and is not a menu to display.");
-                }
+                selectedMenuItem.PerformOnSelect();
             }
         }
 
@@ -69,7 +60,7 @@ namespace Ex04.Menus.Interfaces
             StringBuilder menuToDisplay = new StringBuilder();
             string lastMenuLine = m_CurrentMenuLevel == k_MainMenuLevel ? k_ExitLine : k_BackLine;
             int index = 1;
-            
+
             menuToDisplay.Append(i_MenuItem.Title);
             menuToDisplay.Append(System.Environment.NewLine);
             menuToDisplay.Append(k_TitleLine);

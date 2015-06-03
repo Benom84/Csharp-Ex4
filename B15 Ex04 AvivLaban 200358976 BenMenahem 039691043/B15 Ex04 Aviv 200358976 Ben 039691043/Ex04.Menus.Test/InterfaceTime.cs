@@ -9,15 +9,14 @@ namespace Ex04.Menus.Test
     {
         private const string k_Title = "Show Time";
         private const string k_TimeFormat = "T";
-        private const bool k_IsMainMenu = false;
 
-        public InterfaceTime() : base(k_Title, k_IsMainMenu)
+        public InterfaceTime() : base(k_Title)
         {
-
         }
 
         public void ClickButton()
         {
+            System.Console.Clear();
             System.Console.WriteLine(DateTime.Now.ToString(k_TimeFormat));
             System.Console.ReadLine();
         }

@@ -9,15 +9,14 @@ namespace Ex04.Menus.Test
     {
         private const string k_Title = "Show Date";
         private const string k_DateFormat = "dd.MM.yyyy";
-        private const bool k_IsMainMenu = false;
 
-        public InterfaceDate() : base (k_Title, k_IsMainMenu)
+        public InterfaceDate() : base(k_Title)
         {
-
         }
 
         public void ClickButton()
         {
+            System.Console.Clear();
             System.Console.WriteLine(DateTime.Today.ToString(k_DateFormat));
             System.Console.ReadLine();
         }
