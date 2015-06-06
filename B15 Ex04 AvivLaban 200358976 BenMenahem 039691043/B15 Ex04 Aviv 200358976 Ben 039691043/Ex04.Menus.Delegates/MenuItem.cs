@@ -4,23 +4,17 @@ using System.Text;
 
 namespace Ex04.Menus.Delegates
 {
-    public delegate void SelectEventHandler();
-
     public class MenuItem
     {
-        private event SelectEventHandler OnSelect;
-
+        public event Action<MenuItem> Click;
+        
         private List<MenuItem> m_SubMenuItems;
         private string m_Title;
 
-        public MenuItem(string i_TitleOfMenu, SelectEventHandler i_OnSelectAction)
+        public MenuItem(string i_TitleOfMenu)
         {
             m_Title = i_TitleOfMenu;
             m_SubMenuItems = new List<MenuItem>();
-            if (i_OnSelectAction != null)
-            {
-                OnSelect = i_OnSelectAction;
-            }
         }
         
         public string Title
@@ -44,11 +38,11 @@ namespace Ex04.Menus.Delegates
             m_SubMenuItems.Add(i_MenuItemToAdd);
         }
 
-        public void PerformOnSelect()
+        public void OnClick()
         {
-            if (OnSelect != null)
+            if (Click != null)
             {
-                OnSelect();
+                Click.Invoke(this);
             }
         }
     }

@@ -6,8 +6,14 @@ using Ex04.Menus;
 
 namespace Ex04.Menus.Test
 {
+    public enum eActionsOnClick {
+        ShowDate, ShowTime, ShowVersion, CountWords, None
+    }
+
     public class Program
     {
+        private static Dictionary<Delegates.MenuItem, eActionsOnClick> m_MenuItemToActionOnClick;
+
         public static void Main()
         {
             InterfaceMainMenu mainMenuInterfaceExample = createMainMenuInterfaceExample();
@@ -41,13 +47,15 @@ namespace Ex04.Menus.Test
 
         private static Delegates.MenuItem createMainMenuDelegateExample()
         {
-            Delegates.MenuItem mainMenuDelegateExample = new Delegates.MenuItem("Main Menu Delegates", null);
-            Delegates.MenuItem dateTimeDelegateExample = new Delegates.MenuItem("Show Date/Time", null);
-            Delegates.MenuItem dateDelegateExample = new Delegates.MenuItem("Show Date", showDate);
-            Delegates.MenuItem timeDelegateExample = new Delegates.MenuItem("Show Time", showTime);
-            Delegates.MenuItem infoDelegateExample = new Delegates.MenuItem("Info", null);
-            Delegates.MenuItem versionDelegateExample = new Delegates.MenuItem("Version", showVersion);
-            Delegates.MenuItem countWordsDelegateExample = new Delegates.MenuItem("Count Words", countWords);
+            m_MenuItemToActionOnClick = new Dictionary<Delegates.MenuItem, eActionsOnClick>();
+            
+            Delegates.MenuItem mainMenuDelegateExample = createDelegateMenuItem("Main Menu Delegates", eActionsOnClick.None);
+            Delegates.MenuItem dateTimeDelegateExample = createDelegateMenuItem("Show Date/Time", eActionsOnClick.None);
+            Delegates.MenuItem dateDelegateExample = createDelegateMenuItem("Show Date", eActionsOnClick.ShowDate);
+            Delegates.MenuItem timeDelegateExample = createDelegateMenuItem("Show Time", eActionsOnClick.ShowTime);
+            Delegates.MenuItem infoDelegateExample = createDelegateMenuItem("Info", eActionsOnClick.None);
+            Delegates.MenuItem versionDelegateExample = createDelegateMenuItem("Version", eActionsOnClick.ShowVersion);
+            Delegates.MenuItem countWordsDelegateExample = createDelegateMenuItem("Count Words", eActionsOnClick.CountWords);
 
             dateTimeDelegateExample.AddMenuItem(timeDelegateExample);
             dateTimeDelegateExample.AddMenuItem(dateDelegateExample);
@@ -90,6 +98,45 @@ namespace Ex04.Menus.Test
             numberOfWordsCounted = Regex.Matches(userInput, @"[A-Za-z]+").Count;
             System.Console.WriteLine(string.Format("The number of words in the sentence is: {0}", numberOfWordsCounted));
             System.Console.ReadLine();
+        }
+
+        private static Delegates.MenuItem createDelegateMenuItem(string i_MenuItemName, eActionsOnClick i_ActionToPerform)
+        {
+            Delegates.MenuItem menuCreated = new Delegates.MenuItem(i_MenuItemName);
+            
+            m_MenuItemToActionOnClick.Add(menuCreated, i_ActionToPerform);
+            menuCreated.Click += menuItemClicked;
+
+            return menuCreated;
+        }
+
+        private static void menuItemClicked(Delegates.MenuItem i_menuItemClicked)
+        {
+            eActionsOnClick actionClicked = eActionsOnClick.None;
+
+            if (i_menuItemClicked != null && m_MenuItemToActionOnClick.TryGetValue(i_menuItemClicked, out actionClicked))
+            {
+                switch (actionClicked)
+                {
+                    case eActionsOnClick.ShowDate:
+                        showDate();
+                        break;
+                    case eActionsOnClick.ShowTime:
+                        showTime();
+                        break;
+                    case eActionsOnClick.ShowVersion:
+                        showVersion();
+                        break;
+                    case eActionsOnClick.CountWords:
+                        countWords();
+                        break;
+                    case eActionsOnClick.None:
+                        System.Console.WriteLine("Error: A Menu Item was activated as a button, but no action is linked to is.");
+                        break;
+                    default:
+                        break;
+                }
+            }
         }
     }
 }

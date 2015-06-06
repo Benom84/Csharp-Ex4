@@ -51,7 +51,7 @@ namespace Ex04.Menus.Delegates
             }
             else
             {
-                selectedMenuItem.PerformOnSelect();
+                selectedMenuItem.OnClick();
             }
         }
 
