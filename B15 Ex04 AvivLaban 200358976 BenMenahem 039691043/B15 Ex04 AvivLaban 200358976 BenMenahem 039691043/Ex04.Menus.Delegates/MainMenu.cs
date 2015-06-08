@@ -16,8 +16,34 @@ namespace Ex04.Menus.Delegates
         private const int k_ExitSelection = 0;
         private const int k_MainMenuLevel = 0;
         private int m_CurrentMenuLevel = 0;
+        private MenuItem m_MainMenuItem;
 
-        public void Show(MenuItem i_MenuItem)
+        public MainMenu()
+        {
+            m_MainMenuItem = new MenuItem("Main Menu");
+        }
+
+        public void Show() 
+        {
+            showMenu(m_MainMenuItem);
+        }
+
+        public void AddItemToMainMenu(MenuItem i_ItemToAdd)
+        {
+            m_MainMenuItem.AddMenuItem(i_ItemToAdd);
+        }
+
+        public void RemoveItemFromMainMenu(MenuItem i_ItemToRemove)
+        {
+            m_MainMenuItem.RemoveMenuItem(i_ItemToRemove);
+        }
+
+        public void ChangeMainMenuTitle(string i_NewTitle)
+        {
+            m_MainMenuItem.ChangeTitle(i_NewTitle);
+        }
+
+        private void showMenu(MenuItem i_MenuItem)
         {
             bool showMenu = v_ShowMenu;
             int userSelection = 0;
@@ -46,7 +72,7 @@ namespace Ex04.Menus.Delegates
             if (selectedMenuItem.SubMenuItems != null && selectedMenuItem.SubMenuItems.Count != 0)
             {
                 m_CurrentMenuLevel++;
-                Show(selectedMenuItem);
+                showMenu(selectedMenuItem);
                 m_CurrentMenuLevel--;
             }
             else

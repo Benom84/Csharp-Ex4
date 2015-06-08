@@ -16,18 +16,19 @@ namespace Ex04.Menus.Test
 
         public static void Main()
         {
-            InterfaceMainMenu mainMenuInterfaceExample = createMainMenuInterfaceExample();
             Interfaces.MainMenu mainMenuInterface = new Interfaces.MainMenu();
-            Delegates.MenuItem mainMenuDelegatesExample = createMainMenuDelegateExample();
+            createMainMenuInterfaceExample(mainMenuInterface);
             Delegates.MainMenu mainMenuDelegates = new Delegates.MainMenu();
+            createMainMenuDelegateExample(mainMenuDelegates);
+            mainMenuInterface.ChangeMainMenuTitle("Main Menu Interface");
+            mainMenuDelegates.ChangeMainMenuTitle("Main Menu Delegates");
 
-            mainMenuInterface.Show(mainMenuInterfaceExample);
-            mainMenuDelegates.Show(mainMenuDelegatesExample);
+            mainMenuInterface.Show();
+            mainMenuDelegates.Show();
         }
 
-        private static InterfaceMainMenu createMainMenuInterfaceExample()
+        private static void createMainMenuInterfaceExample(Interfaces.MainMenu i_MainMenuInterface)
         {
-            InterfaceMainMenu mainMenuInterfaceExample = new InterfaceMainMenu();
             InterfaceDateTime dateTimeInterfaceExample = new InterfaceDateTime();
             InterfaceDate dateInterfaceExample = new InterfaceDate();
             InterfaceTime timeInterfaceExample = new InterfaceTime();
@@ -39,17 +40,14 @@ namespace Ex04.Menus.Test
             dateTimeInterfaceExample.AddMenuItem(dateInterfaceExample);
             infoInterfaceExample.AddMenuItem(versionInterfaceExample);
             infoInterfaceExample.AddMenuItem(countWordsInterfaceExample);
-            mainMenuInterfaceExample.AddMenuItem(dateTimeInterfaceExample);
-            mainMenuInterfaceExample.AddMenuItem(infoInterfaceExample);
-
-            return mainMenuInterfaceExample;
+            i_MainMenuInterface.AddItemToMainMenu(dateTimeInterfaceExample);
+            i_MainMenuInterface.AddItemToMainMenu(infoInterfaceExample);
         }
 
-        private static Delegates.MenuItem createMainMenuDelegateExample()
+        private static void createMainMenuDelegateExample(Delegates.MainMenu i_MainMenuDelegates)
         {
             m_MenuItemToActionOnClick = new Dictionary<Delegates.MenuItem, eActionsOnClick>();
             
-            Delegates.MenuItem mainMenuDelegateExample = createDelegateMenuItem("Main Menu Delegates", eActionsOnClick.None);
             Delegates.MenuItem dateTimeDelegateExample = createDelegateMenuItem("Show Date/Time", eActionsOnClick.None);
             Delegates.MenuItem dateDelegateExample = createDelegateMenuItem("Show Date", eActionsOnClick.ShowDate);
             Delegates.MenuItem timeDelegateExample = createDelegateMenuItem("Show Time", eActionsOnClick.ShowTime);
@@ -61,10 +59,8 @@ namespace Ex04.Menus.Test
             dateTimeDelegateExample.AddMenuItem(dateDelegateExample);
             infoDelegateExample.AddMenuItem(versionDelegateExample);
             infoDelegateExample.AddMenuItem(countWordsDelegateExample);
-            mainMenuDelegateExample.AddMenuItem(dateTimeDelegateExample);
-            mainMenuDelegateExample.AddMenuItem(infoDelegateExample);
-
-            return mainMenuDelegateExample;
+            i_MainMenuDelegates.AddItemToMainMenu(dateTimeDelegateExample);
+            i_MainMenuDelegates.AddItemToMainMenu(infoDelegateExample);
         }
 
         private static void showDate()
@@ -105,12 +101,12 @@ namespace Ex04.Menus.Test
             Delegates.MenuItem menuCreated = new Delegates.MenuItem(i_MenuItemName);
             
             m_MenuItemToActionOnClick.Add(menuCreated, i_ActionToPerform);
-            menuCreated.Click += menuItemClicked;
+            menuCreated.Click += menuItem_Click;
 
             return menuCreated;
         }
 
-        private static void menuItemClicked(Delegates.MenuItem i_menuItemClicked)
+        private static void menuItem_Click(Delegates.MenuItem i_menuItemClicked)
         {
             eActionsOnClick actionClicked = eActionsOnClick.None;
 

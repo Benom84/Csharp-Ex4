@@ -34,7 +34,6 @@
   <ItemGroup>
     <Compile Include="InterfaceCountWords.cs" />
     <Compile Include="InterfaceVersion.cs" />
-    <Compile Include="InterfaceMainMenu.cs" />
     <Compile Include="InterfaceInfo.cs" />
     <Compile Include="InterfaceDate.cs" />
     <Compile Include="InterfaceDateTime.cs" />

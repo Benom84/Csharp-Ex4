@@ -2,12 +2,10 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Ex04.Menus.Delegates
+namespace Ex04.Menus.Interfaces
 {
     public class MenuItem
     {
-        public event Action<MenuItem> Click;
-        
         private List<MenuItem> m_SubMenuItems;
         private string m_Title;
 
@@ -16,7 +14,7 @@ namespace Ex04.Menus.Delegates
             m_Title = i_TitleOfMenu;
             m_SubMenuItems = new List<MenuItem>();
         }
-        
+
         public string Title
         {
             get
@@ -38,12 +36,14 @@ namespace Ex04.Menus.Delegates
             m_SubMenuItems.Add(i_MenuItemToAdd);
         }
 
-        public void OnClick()
+        public void RemoveMenuItem(MenuItem i_MenuItemToRemove)
         {
-            if (Click != null)
-            {
-                Click.Invoke(this);
-            }
+            m_SubMenuItems.Remove(i_MenuItemToRemove);
+        }
+
+        public void ChangeTitle(string i_NewTitle)
+        {
+            m_Title = i_NewTitle;
         }
     }
 }
